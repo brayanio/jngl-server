@@ -1,6 +1,3 @@
-const http = require('http')
-const fs = require('fs')
-// utils
 const server = require('./util/server.js')
 
 server('./index.html', {
