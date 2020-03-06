@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JNGL Server</title>
+  </head>
+  <body>
+
+    <p id="p"></p>
+
+    <script>
+      const p = document.getElementById('p')
+      const routes = %
+      routes.forEach(r => {
+        let btn = document.createElement('button')
+        btn.addEventListener('click', async e => {
+          let res = await fetch(`./${r}`)
+          let json = await res.json()
+          console.log(json)
+          p.innerText = JSON.stringify(json)
+        })
+        btn.innerText = r
+        document.body.appendChild(btn)
+      })
+    </script>
+
+    <hr>
+
+    <button onclick="getRoomTest(0)">getRoom:Test</button>
+
+    <script>
+      const post = async (path, body) => {
+        let res = await fetch(path, {
+          method: 'POST', body: JSON.stringify(body)
+        })
+        let json = await res.json()
+        return json
+      }
+
+      window.getRoomTest = async e => {
+        let room = await post(`./newRoom`)
+        let getRoom = await post(`./getRoom`, {id: room.id})
+        console.log(room, getRoom)
+        p.innerText = JSON.stringify(getRoom)
+      }
+    </script>
+
+    <style>
+      button{
+        margin: 8px;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        background: pink;
+        border: 0px solid transparent;
+      }
+    </style>
+  </body>
+</html>
