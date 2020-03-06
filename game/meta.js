@@ -2,4 +2,4 @@ let meta = {
   rooms: []
 }
 
-module.exports = meta
+module.exports = () => meta

@@ -6,10 +6,6 @@ let routes = {
   newRoom: require('./routes/new-room')
 }
 
-let meta = {
-  rooms: []
-}
-
 const parseReqBody = async req => {
   let body = await (new Promise((res, rej) => {
     let body = ''
@@ -31,7 +27,7 @@ http.createServer(async (req, res) => {
   let path = req.url.substr(1)
   let route = routes[req.url.substr(1)]
   if(route)
-    res.write(JSON.stringify(route(meta, {body, path}) || {error: 'Route Not Found'}))
+    res.write(JSON.stringify(route(body, path) || {error: 'Route Not Found'}))
   else{
     let index = fs.readFileSync('./index.html', 'utf8')
       .split('%')

@@ -1,6 +1,6 @@
 const roomService = require('../game/room.js')
 
-module.exports = (data, req) => {
+module.exports = (body, path) => {
   let room = roomService.newRoom()
 
   return room
