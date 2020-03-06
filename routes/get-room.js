@@ -1,8 +1,17 @@
 const roomService = require('../game/room.js')
 
+const RoomNotFoundError = { error: 'Room Not Found' }
+
 module.exports = (body, path) => {
   let id = body.id
-  let room = roomService.getRoom(id) || {error: 'Room Not Found'}
+  let isOpen = body.isOpen
+  let res
 
-  return room
+  if(id)
+    res = roomService.getRoom(id) || RoomNotFoundError 
+  
+  if(isOpen)
+    res = roomService.getOpenRooms()
+
+  return res
 }

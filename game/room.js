@@ -7,6 +7,8 @@ const newRoom = () => {
   return room
 }
 
-const getRoom = id => meta().rooms.find(r => r.id === id)
+const getRoom = id => meta().rooms.find(r => r.meta.id === id)
 
-module.exports = {newRoom, getRoom}
+const getOpenRooms = () => meta().rooms.filter(r => r.meta.isOpen)
+
+module.exports = {newRoom, getRoom, getOpenRooms}

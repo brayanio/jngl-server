@@ -27,7 +27,8 @@
 
     <hr>
 
-    <button onclick="getRoomTest(0)">getRoom:Test</button>
+    <button onclick="getRoomTest(0)">getRoom:id</button>
+    <button onclick="getOpenRoomsTest()">getRoom:isOpen</button>
 
     <script>
       const post = async (path, body) => {
@@ -40,9 +41,15 @@
 
       window.getRoomTest = async e => {
         let room = await post(`./newRoom`)
-        let getRoom = await post(`./getRoom`, {id: room.id})
+        let getRoom = await post(`./getRoom`, {id: room.meta.id})
         console.log(room, getRoom)
         p.innerText = JSON.stringify(getRoom)
+      }
+
+      window.getOpenRoomsTest = async e => {
+        let rooms = await post(`./getRoom`, {isOpen: true})
+        console.log(rooms)
+        p.innerText = JSON.stringify(rooms)
       }
     </script>
 
