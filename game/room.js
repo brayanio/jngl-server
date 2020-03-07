@@ -11,4 +11,6 @@ const getRoom = id => meta().rooms.find(r => r.meta.id === id)
 
 const getOpenRooms = () => meta().rooms.filter(r => r.meta.isOpen)
 
-module.exports = {newRoom, getRoom, getOpenRooms}
+const clearRooms = () => meta().rooms = []
+
+module.exports = {newRoom, getRoom, getOpenRooms, clearRooms}

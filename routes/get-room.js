@@ -13,5 +13,7 @@ module.exports = (body, path) => {
   if(isOpen)
     res = roomService.getOpenRooms()
 
+  console.log('Route: getRoom')
+
   return res
 }
