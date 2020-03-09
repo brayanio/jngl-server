@@ -1,5 +1,6 @@
 let meta = {
-  rooms: []
+  rooms: [],
+  profiles: []
 }
 
 module.exports = () => meta

@@ -2,12 +2,13 @@ const guid = require('../util/guid.js')
 
 module.exports = class {
 
-  constructor() {
+  constructor(body) {
+    console.log(body)
     this.meta = {
       id: guid(),
-      players: [],
+      players: [body.auth],
       isOpen: true,
-      host: null
+      host: body.auth
     }
 
     this.game = {

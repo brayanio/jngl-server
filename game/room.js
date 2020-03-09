@@ -1,9 +1,10 @@
 const meta = require('./meta.js')
 const Room = require('../models/room.js')
 
-const newRoom = () => {
-  let room = new Room()
-  meta().rooms.push(room)
+const newRoom = body => {
+  let room = new Room(body)
+  if(body && room.meta.host)
+    meta().rooms.push(room)
   return room
 }
 
