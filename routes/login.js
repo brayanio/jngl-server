@@ -1,6 +1,10 @@
+const server = require('../util/server.js')
 const authService = require('../game/auth.js')
+const Auth = require('../models/auth.js')
 
-module.exports = (body, path) => {
-  let profile = authService.login(body)
-  return profile
-}
+module.exports = () => server.post('login', body => {
+    const auth = new Auth(body)
+    console.log('[login]', auth.sendable())  
+    return authService.login(auth)
+  }
+)

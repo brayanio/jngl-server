@@ -1,30 +1,28 @@
-const http = require('http')
+//libs
+const
+  express = require('express'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  app = express(),
+  cors = require('cors'),
+  fs = require('fs');
 
-const parseBody = require('./parseBody.js')
-const safeJSON = require('./safeJSON.js')
-const indexHTML = require('./indexHTML.js')
+//config
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true })); //support x-www-form-urlencoded
+app.use(bodyParser.json());
+const serve = port => {
+  const server = app.listen(port, () => console.log(`Server Started [${server.address().port}]`));
+}
 
-const RouteNotFoundError = { error: 'Route Not Found' }
-
-module.exports = (htmlPath, routes, port) => {
-  http.createServer(async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Request-Method', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.writeHead(200, {'Content-Type': 'text/html'})
-
-    let body = await parseBody(req) || '{}'
-    let path = req.url.substr(1)
-
-    let route = routes[req.url.substr(1)]
-
-    if(route)
-      res.write(JSON.stringify(route(safeJSON(body), path) || RouteNotFoundError))
-    else 
-      res.write(indexHTML(htmlPath, routes))
-
+const post = (path, fn) => {
+  app.post('/' + path, (req, res) => {
+    res.send(JSON.stringify(fn(req.body) || { error: 'No Response' }))
     res.end()
   })
-  .listen(port || 4404)
+}
+
+module.exports = {
+  post,
+  serve
 }

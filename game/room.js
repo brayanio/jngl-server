@@ -1,17 +1,58 @@
 const meta = require('./meta.js')
 const Room = require('../models/room.js')
 
-const newRoom = body => {
-  let room = new Room(body)
-  if(body && room.meta.host)
+const RoomNotFound = { error: 'Room not found.' }
+
+const create = (auth) => {
+  if(auth.username){
+    let room = new Room(auth)
     meta().rooms.push(room)
-  return room
+    return room
+  }
 }
 
 const getRoom = id => meta().rooms.find(r => r.meta.id === id)
 
-const getOpenRooms = () => meta().rooms.filter(r => r.meta.isOpen)
+const getOpen = () => meta().rooms.filter(r => r.meta.isOpen)
 
-const clearRooms = () => meta().rooms = []
+const clear = () => meta().rooms = []
 
-module.exports = {newRoom, getRoom, getOpenRooms, clearRooms}
+const join = (id, auth) => {
+  let room = getRoom(id)
+  if(room)
+    return room.join()
+  return RoomNotFound
+}
+
+const checkStatus = (id, auth) => {
+  let room = getRoom(id)
+  if(room)
+    return room.status()
+  return RoomNotFound
+}
+
+const start = (id, auth) => {
+  let room = getRoom(id)
+  if(room){
+    room.startRoom()
+    return room.game
+  }
+  return RoomNotFound
+}
+
+const leave = (id, auth) => {
+  let room = getRoom(id)
+  if(room)
+    room.meta.players = room.meta.players.filter(p => p.username !== auth.username)
+  return getOpen()
+}
+
+module.exports = {
+  create,
+  getOpen,
+  clear,
+  join,
+  checkStatus,
+  start,
+  leave
+}

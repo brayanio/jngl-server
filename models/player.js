@@ -1,9 +1,13 @@
+const Hero = require('./hero.js')
+
 module.exports = class {
 
-  constructor (req) {
-    this.username = req.body.username
-    this.x = 0
-    this.y = 0
+  constructor (username) {
+    this.username = username
+    this.hero = new Hero()
+    this.units = [hero]
   }
+
+
 
 }
