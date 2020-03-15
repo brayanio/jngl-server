@@ -4,6 +4,6 @@ const Auth = require('../models/auth.js')
 
 module.exports = () => server.post('clearRooms', body => {
     console.log('[clear-rooms]', body)
-    return roomService.clear(new Auth(body))
+    return roomService.clear(new Auth(body.auth))
   } 
 )

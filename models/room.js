@@ -10,9 +10,9 @@ module.exports = class {
   constructor (auth) {
     this.meta = {
       id: guid(),
-      players: [auth],
+      players: [auth.sendable()],
       isOpen: true,
-      host: auth
+      host: auth.sendable()
     }
 
     this.game = {
@@ -26,7 +26,7 @@ module.exports = class {
     if(this.meta.players.length >= 6)
       return RoomFull
     if(!this.meta.players.find(p => p.username === auth.username))
-      this.meta.players.push(auth)
+      this.meta.players.push(auth.sendable())
     return this.meta
   }
 

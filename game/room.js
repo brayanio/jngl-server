@@ -4,10 +4,11 @@ const Room = require('../models/room.js')
 const RoomNotFound = { error: 'Room not found.' }
 
 const create = (auth) => {
+  console.log('create', auth)
   if(auth.username){
     let room = new Room(auth)
     meta().rooms.push(room)
-    return room
+    return room.meta
   }
 }
 
@@ -20,7 +21,7 @@ const clear = () => meta().rooms = []
 const join = (id, auth) => {
   let room = getRoom(id)
   if(room)
-    return room.join()
+    return room.join(auth)
   return RoomNotFound
 }
 

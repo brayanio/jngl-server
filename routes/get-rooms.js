@@ -4,6 +4,6 @@ const Auth = require('../models/auth.js')
 
 module.exports = () => server.post('getRooms', body => {
     console.log('[get-rooms]', body)
-    return roomService.getOpen(new Auth(body))
+    return roomService.getOpen(new Auth(body.auth))
   }
 )
