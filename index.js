@@ -1,11 +1,16 @@
 const server = require('./util/server.js')
 
+require('./routes/check-room.js')()
 require('./routes/clear-rooms.js')()
+require('./routes/game-command.js')()
 require('./routes/get-rooms.js')()
+require('./routes/get-updates.js')()
+require('./routes/init.js')()
 require('./routes/join-room.js')()
 require('./routes/leave-room.js')()
 require('./routes/login.js')()
 require('./routes/new-room.js')()
 require('./routes/signup.js')()
+require('./routes/start-room.js')()
 
 server.serve(4200)

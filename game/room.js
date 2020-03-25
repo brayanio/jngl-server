@@ -28,15 +28,18 @@ const join = (id, auth) => {
 const checkStatus = (id, auth) => {
   let room = getRoom(id)
   if(room)
-    return room.status()
+    return room.status(auth)
   return RoomNotFound
 }
 
 const start = (id, auth) => {
   let room = getRoom(id)
   if(room){
-    room.startRoom()
-    return room.game
+    if(room.start) 
+      return room.init(auth)
+    room.startGame()
+    meta().active.push(room)
+    return room.init(auth)
   }
   return RoomNotFound
 }
